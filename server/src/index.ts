@@ -13,7 +13,7 @@ class Server {
     }
 
     config(): void {
-        this.app.set('port', process.env.PORT || 3000);// Establece el puerto
+        this.app.set('port', process.env.PORT || 3001);// Establece el puerto
         this.app.use(morgan('dev'));// Muestra por consola las peticiones
         this.app.use(cors());// Permite la comunicación entre servidores
         this.app.use(express.json());// Permite recibir formatos json

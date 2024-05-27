@@ -15,7 +15,7 @@ class Server {
         this.routes();
     }
     config() {
-        this.app.set('port', process.env.PORT || 3000); // Establece el puerto
+        this.app.set('port', process.env.PORT || 3001); // Establece el puerto
         this.app.use((0, morgan_1.default)('dev')); // Muestra por consola las peticiones
         this.app.use((0, cors_1.default)()); // Permite la comunicación entre servidores
         this.app.use(express_1.default.json()); // Permite recibir formatos json

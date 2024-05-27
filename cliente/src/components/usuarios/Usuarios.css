@@ -1,0 +1,110 @@
+.body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #948979;
+}
+
+.Titulo {
+  color: white;
+  background: #3c5b6f;
+  padding: 10px;
+  text-align: center;
+  /*margin-bottom: 30px;*/
+}
+
+.CentrarBotonAgregarUsuario {
+  display: flex;
+  justify-content: center;
+}
+
+.BotonAgregarUsuario {
+  background-color: #3c5b6f !important;
+  cursor: pointer;
+  color: white !important;
+  width: 70px;
+  height: 70px;
+}
+
+.BotonAgregarUsuario:hover {
+  background-color: white !important;
+  color: #153448 !important;
+}
+
+.BotonesUsuario {
+  background-color: #3c5b6f !important;
+  cursor: pointer;
+  color: white !important;
+  width: 55px;
+  height: 40px;
+}
+
+.BotonesUsuario:hover {
+  background-color: white !important;
+  color: #153448 !important;
+}
+
+.ListaUsuarios {
+  display: flex;
+  margin: 5em;
+  justify-content: center;
+  border: 10px #153448 solid;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #dfd0b8;
+}
+
+.TablaTitulo {
+  background-color: #3c5b6f !important;
+  color: white !important;
+  height: max-content;
+}
+
+.Tuplas {
+  vertical-align: middle; /* Centrar verticalmente */
+}
+
+.body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #948979;
+}
+
+.ModalHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #3c5b6f;
+  color: white;
+}
+
+.ModalBody {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ModalFooter {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  background: #dfd0b8 !important;
+}
+
+.ModalBotonesUsuario {
+  background-color: #3c5b6f !important;
+  color: white !important;
+  cursor: pointer;
+  margin: 5px;
+  border: 0 !important;
+  width: auto;
+}
+
+.ModalBotonesUsuario:hover {
+  background-color: white !important;
+  color: #153448 !important;
+}
+
+.ModalLabel {
+  font-family: Arial, sans-serif, bold !important;
+  margin-top: 25px;
+}
