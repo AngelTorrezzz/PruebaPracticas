@@ -28,10 +28,13 @@ export default function Contactos() {
   const [NombreUsuario, setNombreUsuario] = useState("");
   const [IdContacto, setIdContacto] = useState("");
 
+  const [selectedContacto, setSelectedContacto] = useState(null);
+
   useEffect(() => {
     ObtenerRutaUsuario();
     if (IdUsuario) {
       fetchContactos(IdUsuario);
+      fetchUsuarios(IdUsuario);
     }
   }, [IdUsuario]); // Ejecutar solo cuando IdUsuario cambie
 
@@ -43,7 +46,7 @@ export default function Contactos() {
         method: "GET",
       });
       const data = await response.json();
-      console.log(data);
+      //console.log(data);
       setContactos(data);
     } catch (error) {
       console.error(error);
@@ -51,8 +54,8 @@ export default function Contactos() {
   };
 
   const fetchAgregarContacto = async () => {
-    console.log(IdUsuario);
-    console.log(IdContacto);
+    //console.log(IdUsuario);
+    //console.log(IdContacto);
     try {
       const response = await fetch(
         `${url}contactos/nuevo_contacto/${IdUsuario}/${IdContacto}`,
@@ -62,26 +65,27 @@ export default function Contactos() {
           body: JSON.stringify({ alias }),
         }
       );
-      
-      console.log(response.data.mensaje);
-      if (response.data.mensaje === "El alias ya existe") {
+      const data = await response.json();
+      //console.log(data.mensaje);
+      if (data.mensaje === "El alias ya existe") {
+        //console.log("toma perro");
         Swal.fire({
           icon: "error",
           title: "Error",
-          text: "El alias ya existe",
+          text: "El alias ya existe, pruebe con otro alias",
         });
         return;
       }
-      //console.log(data);
-
-      const data = await response.json();
       fetchContactos(IdUsuario);
+      fetchUsuarios(IdUsuario);
     } catch (error) {
       console.error(error);
     }
   };
 
   const fetchEditarContacto = async () => {
+    //console.log(IdUsuario);
+    //console.log(IdContacto);
     try {
       const response = await fetch(
         `${url}contactos/actualizar_contacto/${IdUsuario}/${IdContacto}`,
@@ -92,24 +96,25 @@ export default function Contactos() {
         }
       );
       const data = await response.json();
-      console.log(response.data.mensaje);
-      if (response.data.mensaje === "El alias ya existe") {
+      //console.log(data.mensaje);
+      if (data.mensaje === "El alias ya existe") {
+        //console.log("toma perro");
         Swal.fire({
           icon: "error",
           title: "Error",
-          text: "El alias ya existe",
+          text: "El alias ya existe, pruebe con otro alias",
         });
         return;
       }
-      //console.log(data);
       fetchContactos(IdUsuario);
+      fetchUsuarios(IdUsuario);
     } catch (error) {
       console.error(error);
     }
   };
 
   const fetchEliminarContacto = async (contactoo) => {
-    console.log(contactoo.id);
+    //console.log(contactoo.id);
     try {
       const response = await fetch(
         `${url}contactos/eliminar_contacto/${IdUsuario}/${contactoo.id}`,
@@ -120,14 +125,16 @@ export default function Contactos() {
       const data = await response.json();
       console.log(data);
       fetchContactos(IdUsuario);
+      fetchUsuarios(IdUsuario);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const fetchUsuarios = async () => {
+  const fetchUsuarios = async (idUsuario) => {
+    //console.log(idUsuario);
     try {
-      const response = await fetch(`${url}contactos2/${IdUsuario}`);
+      const response = await fetch(`${url}contactos2/${idUsuario}`);
       const data = await response.json();
       setUsuarios(data);
     } catch (error) {
@@ -146,20 +153,37 @@ export default function Contactos() {
   };
 
   const OpenModal = (opp, usuario) => {
+    //fetchUsuarios(IdUsuario);
     setOp(opp);
     setAlias("");
+    setSelectedContacto(null);
+    setIdContacto(null);
     if (opp === 1) {
+      //fetchUsuarios(IdUsuario);
+      //console.log(usuarios);
+      let tamano = usuarios.length;
+      //console.log(tamano);
+      if (tamano === 0) {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Todos los contactos disponibles ya han sido agregados a su directorio",
+        });
+        return;
+      }
       setTitle("Nuevo Contacto");
-      fetchUsuarios();
+      handleShow();
     } else if (opp === 2) {
       setTitle("Editar Contacto");
       setAlias(usuario.alias);
+      //console.log(usuario.id);
+      setIdContacto(usuario.id);
+      handleShow();
     }
-    handleShow();
   };
 
   const Confirmar = () => {
-    if (alias === "") {
+    if (alias === "" || !IdContacto) {
       Swal.fire({
         icon: "error",
         title: "Error",
@@ -224,6 +248,11 @@ export default function Contactos() {
     });
   };
 
+  const handleSelect = (contacto) => {
+    setSelectedContacto(contacto.nombres);
+    setIdContacto(contacto.id);
+  };
+
   return (
     <>
       <div className="body">
@@ -232,7 +261,7 @@ export default function Contactos() {
         </div>
         <br></br>
 
-        <h3 className="Contactos">Contactos De: {NombreUsuario}</h3>
+        <h3 className="Contactos">Directorio de: {NombreUsuario}</h3>
 
         <br></br>
         <div className="CentrarBotonAgregarUsuario">
@@ -302,16 +331,22 @@ export default function Contactos() {
         <Modal.Body className="ModalBody">
           {op === 1 && (
             <Dropdown>
-              <Dropdown.Toggle variant="success" id="dropdown-basic">
-                Seleccionar Nuevo Contacto
+              <label className="ModalLabel">Usuarios</label>
+              <Dropdown.Toggle
+                variant="success"
+                id="dropdown-basic"
+                className="DropDownContactosToggle"
+              >
+                {selectedContacto ? selectedContacto : "Seleccionar"}
               </Dropdown.Toggle>
 
-              <Dropdown.Menu>
+              <Dropdown.Menu className="DropDownContactosMenu">
                 {usuarios.map((noComun) => (
                   <Dropdown.Item
+                    className="DropDownContactosItem"
                     key={noComun.id}
                     value={noComun.id}
-                    onClick={() => setIdContacto(noComun.id)}
+                    onClick={() => handleSelect(noComun)}
                   >
                     {noComun.nombres}
                   </Dropdown.Item>

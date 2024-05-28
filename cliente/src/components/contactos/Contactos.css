@@ -81,8 +81,30 @@
 
 .ModalBody {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.DropDownContactosToggle {
+  background-color: #3c5b6f !important;
+  color: white !important;
+  cursor: pointer;
+  margin: 5px;
+  border: 0 !important;
+  width: min-content !important; /* Asegura que el dropdown ocupe todo el ancho disponible */
+}
+
+.DropDownContactosMenu {
+  background-color: #dfd0b8 !important;
+  color: black !important;
+  cursor: pointer;
+  border: 0 !important;
+  width: 100%;
+}
+
+.DropDownContactosItem:hover {
+  background-color: #948979 !important;
+  width: 100%;
 }
 
 .ModalFooter {

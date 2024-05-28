@@ -55,7 +55,7 @@ class UsuariosController {
       [id]
     );
     const resp2 = await pool.query(
-      "SELECT contactos.alias FROM contactos WHERE id_usuario = ?",
+      "SELECT contactos.id_contacto, contactos.alias FROM contactos WHERE id_usuario = ? ORDER BY contactos.id_contacto",
       [id]
     );
 
@@ -100,6 +100,7 @@ class UsuariosController {
       [req.body.alias, id]
     );
     if (existeAlias.length > 0) {
+      //console.log("proobando");
       res.json({ mensaje: "El alias ya existe" });
       return;
     } else {

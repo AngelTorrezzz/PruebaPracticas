@@ -75,7 +75,7 @@ export default function Usuarios() {
   };
 
   const fetchEliminarUsuario = async (id) => {
-    console.log(id);
+    //console.log(id);
     try {
       const response = await fetch(`${url}eliminar_usuario/${id}`, {
         method: "DELETE",

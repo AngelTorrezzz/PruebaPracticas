@@ -66,7 +66,7 @@ class UsuariosController {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
             const resp = yield database_1.default.query("SELECT * FROM usuarios WHERE usuarios.id IN (SELECT contactos.id_contacto FROM contactos WHERE contactos.id_usuario = ?);", [id]);
-            const resp2 = yield database_1.default.query("SELECT contactos.alias FROM contactos WHERE id_usuario = ?", [id]);
+            const resp2 = yield database_1.default.query("SELECT contactos.id_contacto, contactos.alias FROM contactos WHERE id_usuario = ? ORDER BY contactos.id_contacto", [id]);
             //Se agrega el alias a cada contacto para mostrarlo en la lista debido a que el alias se encuentra en la tabla contactos
             for (let i = 0; i < resp2.length; i++) {
                 resp[i].alias = resp2[i].alias;
@@ -97,6 +97,7 @@ class UsuariosController {
             const { id, id_contacto } = req.params;
             const existeAlias = yield database_1.default.query("SELECT * FROM contactos WHERE alias = ? AND id_usuario = ?", [req.body.alias, id]);
             if (existeAlias.length > 0) {
+                //console.log("proobando");
                 res.json({ mensaje: "El alias ya existe" });
                 return;
             }
