@@ -25,12 +25,14 @@ class UsuariosController {
     listOneUser(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const respuesta = yield database_1.default.query("SELECT * FROM usuarios WHERE id = ?", [id]);
+            const respuesta = yield database_1.default.query("SELECT * FROM usuarios WHERE id = ?", [
+                id,
+            ]);
             if (respuesta.length > 0) {
                 res.json(respuesta[0]);
                 return;
             }
-            res.status(404).json({ "mensaje": "El usuario no existe" });
+            res.status(404).json({ mensaje: "El usuario no existe" });
         });
     }
     createUser(req, res) {
@@ -43,7 +45,10 @@ class UsuariosController {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
             console.log(req.body);
-            const resp = yield database_1.default.query("UPDATE usuarios set ? WHERE id = ?", [req.body, id]);
+            const resp = yield database_1.default.query("UPDATE usuarios set ? WHERE id = ?", [
+                req.body,
+                id,
+            ]);
             res.json(resp);
         });
     }
@@ -51,6 +56,7 @@ class UsuariosController {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
             const resp = yield database_1.default.query("DELETE FROM usuarios WHERE id = ?", [id]);
+            const resp2 = yield database_1.default.query("DELETE FROM contactos WHERE id_usuario = ? OR id_contacto = ?", [id, id]);
             res.json(resp);
         });
     }
@@ -65,6 +71,13 @@ class UsuariosController {
             for (let i = 0; i < resp2.length; i++) {
                 resp[i].alias = resp2[i].alias;
             }
+            res.json(resp);
+        });
+    }
+    listContacts2(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            const resp = yield database_1.default.query("SELECT * FROM usuarios WHERE usuarios.id NOT IN (SELECT contactos.id_contacto FROM contactos WHERE contactos.id_usuario = ?) AND usuarios.id != ?;", [id, id]);
             res.json(resp);
         });
     }
@@ -84,11 +97,15 @@ class UsuariosController {
             const { id, id_contacto } = req.params;
             const existeAlias = yield database_1.default.query("SELECT * FROM contactos WHERE alias = ? AND id_usuario = ?", [req.body.alias, id]);
             if (existeAlias.length > 0) {
-                res.status(404).json({ "mensaje": "El alias ya existe para otro contacto" });
+                res.json({ mensaje: "El alias ya existe" });
                 return;
             }
             else {
-                const nuevo = { "id_usuario": id, "id_contacto": id_contacto, "alias": req.body.alias };
+                const nuevo = {
+                    id_usuario: id,
+                    id_contacto: id_contacto,
+                    alias: req.body.alias,
+                };
                 const resp = yield database_1.default.query("INSERT INTO contactos set ?", [nuevo]);
                 res.json(resp);
             }
@@ -100,7 +117,7 @@ class UsuariosController {
             const { id, id_contacto } = req.params;
             const existeAlias = yield database_1.default.query("SELECT * FROM contactos WHERE alias = ? AND id_usuario = ?", [req.body.alias, id]);
             if (existeAlias.length > 0) {
-                res.status(404).json({ "mensaje": "El alias ya existe para otro contacto" });
+                res.json({ mensaje: "El alias ya existe" });
                 return;
             }
             else {
