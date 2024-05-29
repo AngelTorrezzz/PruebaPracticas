@@ -6,12 +6,12 @@ exports.default = {
         port: 3306,
         user: "dbmasteruser",
         password: "%IhfH`Oze=b|:3kF+z8W%hoN%q(LffBS",
-        database: "pruebapracticas",
+        database: "ambarstore",
     },
-    //database:{
-    //    host:'localhost',
-    //    user:'root',
-    //    password:'',
-    //    database:'pruebapracticas'
-    //}
+    //database: {
+    //  host: "localhost",
+    //  user: "root",
+    //  password: "",
+    //  database: "pruebapracticas",
+    //},
 };
