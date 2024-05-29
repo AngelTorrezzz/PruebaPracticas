@@ -1,9 +1,9 @@
 export default {
   database: {
-    host: "ls-3c5a010d718b239397737d7513c830bef63d9d6b.cttkzyhx9afj.us-east-1.rds.amazonaws.com",
+    host: "ls-d78700e295fdf0285aaa47044611235e252b3034.cl8ceoyk4wgx.us-east-2.rds.amazonaws.com ",
     port: 3306,
     user: "dbmasteruser",
-    password: "%IhfH`Oze=b|:3kF+z8W%hoN%q(LffBS",
+    password: "4w||m+pUG%|x_`r:17Udw1wl&GV#ekEE",
     database: "ambarstore",
   },
   //database: {
