@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 
 export default function Contactos() {
   //const url = "http://localhost:3001/api/usuarios/";
-  const url = "pruebapracticas.netlify.app/api/usuarios/";
+  const url = "https://pruebapracticas.onrender.com/api/usuarios/";
 
   //VARIABLES USUARIO
   const [contactos, setContactos] = useState([]);
